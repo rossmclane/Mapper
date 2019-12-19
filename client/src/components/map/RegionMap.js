@@ -1,4 +1,5 @@
 import statesData from "../../rainfall";
+// import londonData from "../../london.json";
 import React from "react";
 import { Map, TileLayer, GeoJSON } from "react-leaflet";
 import "./style.css";
@@ -10,17 +11,32 @@ class RegionMap extends React.Component {
     zoom: 4
   };
 
-  geoJSONStyle = (feature, prop) => {
+  calculateWeighting = feature => {
+    var usedDatasets = this.props.datasets.filter(
+      dataset => dataset.checked === true
+    );
+
+    console.log(usedDatasets);
+
+    if (usedDatasets.length === 0) {
+      console.log("No Datasets");
+      return null;
+    } else {
+      var final = usedDatasets
+        .map(dataset => feature.properties[dataset.name])
+        .reduce((acc, current) => acc + current);
+      return final;
+    }
+  };
+
+  geoJSONStyle = feature => {
     return {
       color: "#1f2021",
       weight: 1,
       fillOpacity: 0.7,
-      fillColor: this.getColor(
-        this.props.datasets
-          .filter(dataset => dataset.checked === true)
-          .map(dataset => feature.properties[dataset.name])
-          .reduce((acc, current) => acc + current)
-      )
+      fillColor: this.calculateWeighting(feature)
+        ? this.getColor(this.calculateWeighting(feature))
+        : "#FFEDA0"
     };
   };
 

@@ -4444,4 +4444,5 @@ statesData.features.forEach(function(feature) {
   feature.properties.rainfall = rainfallStats[feature.properties.name];
 });
 
-export default statesData;
+// export default statesData;
+module.exports = statesData;
