@@ -17,7 +17,8 @@ class RegionMap extends React.Component {
       fillOpacity: 0.7,
       fillColor: this.getColor(
         this.props.datasets
-          .map(dataset => feature.properties[dataset])
+          .filter(dataset => dataset.checked === true)
+          .map(dataset => feature.properties[dataset.name])
           .reduce((acc, current) => acc + current)
       )
     };
