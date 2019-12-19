@@ -8,4 +8,44 @@ router.route("/features").get((req, res) => {
     .catch(err => res.json(err));
 });
 
+router.route("/newmap").post((req, res) => {
+  const { FeatureCollectionID, UserID, Datasets } = req.body;
+
+  db.UserMap.create({
+    FeatureCollection: FeatureCollectionID,
+    Datasets: Datasets
+  })
+    .then(function(userMapData) {
+      return db.User.findOneAndUpdate(
+        { _id: UserID },
+        { $push: { usermaps: userMapData._id } },
+        { new: true }
+      );
+    })
+    .then(data => res.json(data))
+    .catch(function(err) {
+      res.json(err);
+    });
+});
+
+// router.route("/user").get((req, res) => {
+//   const { FeatureCollectionID, UserID, Datasets } = req.body;
+
+//   db.UserMap.create({
+//     FeatureCollection: FeatureCollectionID,
+//     Datasets: Datasets
+//   })
+//     .then(function(userMapData) {
+//       return db.User.findOneAndUpdate(
+//         { _id: UserID },
+//         { $push: { usermaps: userMapData._id } },
+//         { new: true }
+//       );
+//     })
+//     .then(data => res.json(data))
+//     .catch(function(err) {
+//       res.json(err);
+//     });
+// });
+
 module.exports = router;

@@ -1,5 +1,4 @@
 import statesData from "../../rainfall";
-// import londonData from "../../london.json";
 import React from "react";
 import { Map, TileLayer, GeoJSON } from "react-leaflet";
 import "./style.css";
@@ -16,10 +15,7 @@ class RegionMap extends React.Component {
       dataset => dataset.checked === true
     );
 
-    console.log(usedDatasets);
-
     if (usedDatasets.length === 0) {
-      console.log("No Datasets");
       return null;
     } else {
       var final = usedDatasets
@@ -40,7 +36,6 @@ class RegionMap extends React.Component {
     };
   };
 
-  // Get smarter about this: Need to split up evenly
   getColor(d) {
     return d > 1000
       ? "#800026"

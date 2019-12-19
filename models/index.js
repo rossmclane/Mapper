@@ -1,3 +1,5 @@
 module.exports = {
-  FeatureCollection: require("./FeatureCollection")
+  FeatureCollection: require("./FeatureCollection"),
+  UserMap: require("./UserMap"),
+  User: require("./User")
 };
