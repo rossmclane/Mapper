@@ -3,11 +3,15 @@ const db = require("../models");
 
 mongoose.connect(process.env.MONGODB_URI || "mongodb://localhost/mapper");
 
-db.User.create({
-  maps: []
-})
+db.User.remove({})
+  .then(() =>
+    db.User.create({
+      username: "rossmclane",
+      maps: []
+    })
+  )
   .then(data => {
-    console.log(data.result);
+    console.log(data);
     process.exit(0);
   })
   .catch(err => {

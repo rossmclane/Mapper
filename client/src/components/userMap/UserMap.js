@@ -2,37 +2,29 @@ import React, { Component } from "react";
 import RegionMap from "../regionMap/RegionMap";
 import CheckboxInput from "../checkboxInput/CheckboxInput";
 import CheckboxContainer from "../checkboxContainer/CheckboxContainer";
+import SaveButton from "../saveButton/SaveButton";
 import "./style.css";
 import API from "../../utils/API";
 
 class UserMap extends Component {
   state = {
-    user: "Ross",
-    datasets: [
-      { name: "density", checked: false },
-      { name: "rainfall", checked: true }
-    ],
-    featureCollection: "String"
+    username: "",
+    datasets: [],
+    featureCollection: ""
   };
 
-  componentDidMount() {
-    API.getFeatureCollection().then(response => {
-      var datasetArray = Object.keys(
-        response.data[0].features[0].properties
-      ).filter(property => property !== "name");
+  componentDidMount = () => {
+    var { usermapID, username } = this.props.match.params;
 
-      var datasets = datasetArray.map(dataset => {
-        return {
-          name: dataset,
-          checked: false
-        };
-      });
-
+    API.getUserMap(usermapID).then(response => {
+      var { Datasets, FeatureCollection } = response.data[0];
       this.setState({
-        datasets: datasets
+        datasets: Datasets,
+        featureCollection: FeatureCollection,
+        username: username
       });
     });
-  }
+  };
 
   handleChange = ({ target }) => {
     const { name, checked } = target;
@@ -56,6 +48,7 @@ class UserMap extends Component {
             <CheckboxInput dataset={dataset} handleChange={this.handleChange} />
           ))}
         </CheckboxContainer>
+        <SaveButton state={this.state} />
       </div>
     );
   }

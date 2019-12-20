@@ -1,15 +1,22 @@
 const router = require("express").Router();
 const db = require("../models");
 
-// Get request to recipes
-router.route("/features").get((req, res) => {
-  db.FeatureCollection.find()
-    .then(data => res.json(data))
-    .catch(err => res.json(err));
+// Map Routes
+router.route("/map/:id").get((req, res) => {
+  db.UserMap.find({ _id: req.params.id }).then(data => res.json(data));
 });
 
-router.route("/newmap").post((req, res) => {
-  const { FeatureCollectionID, UserID, Datasets } = req.body;
+// Gets a user by their username
+router.route("/user/:username").get((req, res) => {
+  db.User.find({ username: req.params.username }).then(data => res.json(data));
+});
+
+// Post a map associated with a user
+router.route("/user/:username/map").post((req, res) => {
+  var username = req.params.username;
+
+  // Get the featureCollectionID and dataset from the req.body
+  const { FeatureCollectionID, Datasets } = req.body;
 
   db.UserMap.create({
     FeatureCollection: FeatureCollectionID,
@@ -17,7 +24,7 @@ router.route("/newmap").post((req, res) => {
   })
     .then(function(userMapData) {
       return db.User.findOneAndUpdate(
-        { _id: UserID },
+        { username: username },
         { $push: { usermaps: userMapData._id } },
         { new: true }
       );
@@ -27,25 +34,5 @@ router.route("/newmap").post((req, res) => {
       res.json(err);
     });
 });
-
-// router.route("/user").get((req, res) => {
-//   const { FeatureCollectionID, UserID, Datasets } = req.body;
-
-//   db.UserMap.create({
-//     FeatureCollection: FeatureCollectionID,
-//     Datasets: Datasets
-//   })
-//     .then(function(userMapData) {
-//       return db.User.findOneAndUpdate(
-//         { _id: UserID },
-//         { $push: { usermaps: userMapData._id } },
-//         { new: true }
-//       );
-//     })
-//     .then(data => res.json(data))
-//     .catch(function(err) {
-//       res.json(err);
-//     });
-// });
 
 module.exports = router;
