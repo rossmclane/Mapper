@@ -6,5 +6,8 @@ export default {
   },
   postUserMap: function(username, data) {
     return axios.post(`/user/${username}/map`, data);
+  },
+  getUser: function(username) {
+    return axios.get(`/api/user/${username}`);
   }
 };
