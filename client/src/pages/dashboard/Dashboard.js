@@ -16,20 +16,32 @@ export default class Dashboard extends Component {
   componentDidMount = () => {
     var username = this.props.match.params.username;
 
-    // setTimeout(() => {
-    //   this.props.history.push("/");
-    // }, 2000);
-
-    // Do an api call to api/user/:username
-    // Get all of the ids for that users maps
-    // Create links to each of those maps
-    // Where the link is from react router which goes to /u/:username/map/:usermapID
     API.getUser(username).then(response => {
       var usermapIDs = response.data[0].usermaps;
       this.setState({
         username: username,
         usermapIDs: usermapIDs
       });
+    });
+  };
+
+  // When the button is clicked take the username from state
+  // Post a new map to the user with defaults checked
+  handleNewMap = () => {
+    // Pull all of the default datasets from the databse
+    var username = this.state.username;
+    var mapData = {
+      FeatureCollection: "5dfb8efca0ed4346d764ffa6",
+      Datasets: [
+        { name: "density", checked: false },
+        { name: "rainfall", checked: false }
+      ]
+    };
+    API.postUserMap(username, mapData).then(response => {
+      var usermaps = response.data.usermaps;
+      var usermapID = usermaps[usermaps.length - 1];
+
+      this.props.history.push(`/u/${username}/map/${usermapID}`);
     });
   };
 
@@ -46,6 +58,7 @@ export default class Dashboard extends Component {
               </Link>
             </div>
           ))}
+          <button onClick={this.handleNewMap}> Create a new map </button>
         </div>
       </Jumbotron>
     );

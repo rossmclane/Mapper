@@ -16,7 +16,6 @@ class RegionMap extends React.Component {
     var usedDatasets = this.props.datasets.filter(
       dataset => dataset.checked === true
     );
-    // console.log(usedDatasets);
 
     if (usedDatasets.length === 0) {
       return null;
