@@ -1,10 +1,11 @@
 import React from "react";
 import "./App.css";
 import UserMap from "./components/userMap/UserMap";
-import Dashboard from "./components/dashboard/Dashboard";
-import NoMatch from "./components/NoMatch/NoMatch";
-import Homepage from "./components/Homepage/Homepage";
+import Dashboard from "./pages/dashboard/Dashboard";
+import NoMatch from "./pages/NoMatch/NoMatch";
+import Homepage from "./pages/Homepage/Homepage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function App() {
   return (

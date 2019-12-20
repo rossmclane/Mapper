@@ -1,7 +1,8 @@
 import React, { Component } from "react";
 import "./style.css";
 import API from "../../utils/API";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
+import Jumbotron from "react-bootstrap/Jumbotron";
 
 // The dashboard component should have an h1 with the current username
 // It should also have a number of links associated with that users maps
@@ -14,6 +15,10 @@ export default class Dashboard extends Component {
 
   componentDidMount = () => {
     var username = this.props.match.params.username;
+
+    // setTimeout(() => {
+    //   this.props.history.push("/");
+    // }, 2000);
 
     // Do an api call to api/user/:username
     // Get all of the ids for that users maps
@@ -30,17 +35,19 @@ export default class Dashboard extends Component {
 
   render() {
     return (
-      <div>
-        <h1>{this.state.username}</h1>
+      <Jumbotron>
+        <div>
+          <h1>{this.state.username}</h1>
 
-        {this.state.usermapIDs.map(usermapID => (
-          <div>
-            <Link to={`/u/${this.state.username}/map/${usermapID}`}>
-              {usermapID}
-            </Link>
-          </div>
-        ))}
-      </div>
+          {this.state.usermapIDs.map(usermapID => (
+            <div>
+              <Link to={`/u/${this.state.username}/map/${usermapID}`}>
+                {usermapID}
+              </Link>
+            </div>
+          ))}
+        </div>
+      </Jumbotron>
     );
   }
 }

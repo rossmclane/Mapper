@@ -35,4 +35,11 @@ router.route("/user/:username/map").post((req, res) => {
     });
 });
 
+// Post a user with empty usermaps
+router.route("/user/:username").post((req, res) => {
+  db.User.create({ username: req.params.username, usermaps: [] }).then(data =>
+    res.json(data)
+  );
+});
+
 module.exports = router;
