@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import UserMap from "./components/userMap/UserMap";
 import Dashboard from "./pages/dashboard/Dashboard";
 import NoMatch from "./pages/NoMatch/NoMatch";

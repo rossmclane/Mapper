@@ -3,12 +3,11 @@ import API from "../../utils/API";
 
 export default class SaveButton extends Component {
   handleClick = () => {
-    var postObject = {
-      FeatureCollectionID: this.props.state.featureCollection,
-      Datasets: this.props.state.datasets
-    };
-
-    API.postUserMap(postObject).then(response => console.log(response));
+    var userMapID = this.props.state.mapID;
+    var datasets = this.props.state.datasets;
+    API.updateUserMap(userMapID, datasets).then(response =>
+      console.log(response.data)
+    );
   };
 
   render() {

@@ -13,7 +13,6 @@ class Homepage extends React.Component {
     const { value } = target;
 
     this.setState({ username: value });
-    console.log(this.state);
   };
 
   // onSubmit, take the username and create a post to the db

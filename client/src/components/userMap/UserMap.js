@@ -10,7 +10,8 @@ class UserMap extends Component {
   state = {
     username: "",
     datasets: [],
-    featureCollection: ""
+    featureCollection: "",
+    mapID: ""
   };
 
   componentDidMount = () => {
@@ -21,8 +22,11 @@ class UserMap extends Component {
       this.setState({
         datasets: Datasets,
         featureCollection: FeatureCollection,
-        username: username
+        username: username,
+        mapID: usermapID
       });
+
+      console.log(this.state);
     });
   };
 
@@ -35,6 +39,7 @@ class UserMap extends Component {
         obj.name === name ? Object.assign(obj, { checked: checked }) : obj
       )
     }));
+    console.log(this.state);
   };
 
   render() {

@@ -11,8 +11,6 @@ class RegionMap extends React.Component {
   };
 
   calculateWeighting = feature => {
-    console.log(this.props.datasets[0]);
-
     var usedDatasets = this.props.datasets.filter(
       dataset => dataset.checked === true
     );

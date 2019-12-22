@@ -42,4 +42,12 @@ router.route("/user/:username").post((req, res) => {
   );
 });
 
+// Update a usermap
+router.route("/map/:id").put((req, res) => {
+  db.UserMap.updateOne(
+    { _id: req.params.id },
+    { $set: { Datasets: req.body } }
+  ).then(response => console.log(response));
+});
+
 module.exports = router;
