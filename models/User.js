@@ -1,10 +1,19 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcryptjs");
 
 const UserSchema = new Schema({
-  // Insist that username is unique
-  username: { type: String },
+  username: {
+    type: String,
+    unique: true,
+    required: "Please Enter a Username"
+  },
+  password: { type: String, required: "Please Enter a Password" },
   usermapIDs: [{ type: Schema.Types.ObjectId, ref: "UserMap" }]
+});
+
+UserSchema.pre("save", () => {
+  this.password = bcrypt.hashSync(this.password, 5);
 });
 
 const User = mongoose.model("User", UserSchema);

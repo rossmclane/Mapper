@@ -36,11 +36,23 @@ router.route("/map/:id").put((req, res) => {
 });
 
 // User Routes
-router.route("/user/:username").post((req, res) => {
+// router.route("/user/:username").post((req, res) => {
+//   db.User.create({
+//     username: req.params.username,
+//     usermapIDs: []
+//   })
+//     .then(data => res.json(data))
+//     .catch(err => res.json(err));
+// });
+
+router.route("/user").post((req, res) => {
   db.User.create({
-    username: req.params.username,
+    username: req.body.username,
+    password: req.body.password,
     usermapIDs: []
-  }).then(data => res.json(data));
+  })
+    .then(data => res.json(data))
+    .catch(err => res.json(err));
 });
 
 router.route("/user/:username").get((req, res) => {
