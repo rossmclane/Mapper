@@ -1,6 +1,6 @@
 import React from "react";
 import "./style.css";
-import { Input, FormBtn } from "../../components/input/index";
+import { Input, FormBtn } from "../../components/Input";
 import API from "../../utils/API";
 
 class Homepage extends React.Component {

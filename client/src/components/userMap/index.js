@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import RegionMap from "../regionMap/RegionMap";
-import CheckboxInput from "../checkboxInput/CheckboxInput";
-import CheckboxContainer from "../checkboxContainer/CheckboxContainer";
-import SaveButton from "../saveButton/SaveButton";
+import RegionMap from "../RegionMap";
+import CheckboxInput from "../CheckboxInput";
+import CheckboxContainer from "../CheckboxContainer";
+import SaveButton from "../SaveButton";
 import "./style.css";
 import API from "../../utils/API";
 
@@ -10,7 +10,7 @@ class UserMap extends Component {
   state = {
     username: "",
     datasets: [],
-    featureCollection: "",
+    featurecollectionID: "",
     mapID: ""
   };
 
@@ -18,10 +18,10 @@ class UserMap extends Component {
     var { usermapID, username } = this.props.match.params;
 
     API.getUserMap(usermapID).then(response => {
-      var { Datasets, FeatureCollection } = response.data[0];
+      var { datasets, featurecollectionID } = response.data[0];
       this.setState({
-        datasets: Datasets,
-        featureCollection: FeatureCollection,
+        datasets: datasets,
+        featurecollectionID: featurecollectionID,
         username: username,
         mapID: usermapID
       });

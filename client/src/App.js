@@ -1,8 +1,8 @@
 import React from "react";
-import UserMap from "./components/userMap/UserMap";
-import Dashboard from "./pages/dashboard/Dashboard";
-import NoMatch from "./pages/NoMatch/NoMatch";
-import Homepage from "./pages/Homepage/Homepage";
+import UserMap from "./components/UserMap";
+import Dashboard from "./pages/Dashboard";
+import NoMatch from "./pages/NoMatch/";
+import Homepage from "./pages/Homepage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 

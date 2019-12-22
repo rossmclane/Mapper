@@ -31,8 +31,8 @@ export default class Dashboard extends Component {
     // Pull all of the default datasets from the databse
     var username = this.state.username;
     var mapData = {
-      FeatureCollectionID: "5dfb8efca0ed4346d764ffa6",
-      Datasets: [
+      featurecollectionID: "5dfb8efca0ed4346d764ffa6",
+      datasets: [
         { name: "density", checked: false },
         { name: "rainfall", checked: false }
       ]

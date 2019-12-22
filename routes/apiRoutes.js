@@ -15,12 +15,11 @@ router.route("/user/:username").get((req, res) => {
 router.route("/user/:username/map").post((req, res) => {
   var username = req.params.username;
 
-  // Get the featureCollectionID and dataset from the req.body
-  const { FeatureCollectionID, Datasets } = req.body;
+  const { featurecollectionID, datasets } = req.body;
 
   db.UserMap.create({
-    FeatureCollection: FeatureCollectionID,
-    Datasets: Datasets
+    featurecollectionID: featurecollectionID,
+    datasets: datasets
   })
     .then(function(userMapData) {
       return db.User.findOneAndUpdate(
@@ -46,7 +45,7 @@ router.route("/user/:username").post((req, res) => {
 router.route("/map/:id").put((req, res) => {
   db.UserMap.updateOne(
     { _id: req.params.id },
-    { $set: { Datasets: req.body } }
+    { $set: { datasets: req.body } }
   ).then(response => console.log(response));
 });
 
