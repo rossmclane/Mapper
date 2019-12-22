@@ -11,7 +11,7 @@ class UserMap extends Component {
     username: "",
     datasets: [],
     featurecollectionID: "",
-    mapID: ""
+    usermapID: ""
   };
 
   componentDidMount = () => {
@@ -23,7 +23,7 @@ class UserMap extends Component {
         datasets: datasets,
         featurecollectionID: featurecollectionID,
         username: username,
-        mapID: usermapID
+        usermapID: usermapID
       });
 
       console.log(this.state);
