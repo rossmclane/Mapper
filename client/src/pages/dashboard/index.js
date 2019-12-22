@@ -25,10 +25,7 @@ export default class Dashboard extends Component {
     });
   };
 
-  // When the button is clicked take the username from state
-  // Post a new map to the user with defaults checked
   handleNewMap = () => {
-    // Pull all of the default datasets from the databse
     var username = this.state.username;
     var mapData = {
       featurecollectionID: "5dfb8efca0ed4346d764ffa6",

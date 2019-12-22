@@ -5,6 +5,8 @@ import CheckboxContainer from "../CheckboxContainer";
 import SaveButton from "../SaveButton";
 import "./style.css";
 import API from "../../utils/API";
+import Jumbotron from "react-bootstrap/Jumbotron";
+import Layout from "../Layout";
 
 class UserMap extends Component {
   state = {
@@ -44,17 +46,22 @@ class UserMap extends Component {
 
   render() {
     return (
-      <div>
-        <h1 id="heading">Mapper</h1>{" "}
-        <RegionMap datasets={this.state.datasets} />
-        <CheckboxContainer>
-          <h3>Datasets</h3>
-          {this.state.datasets.map(dataset => (
-            <CheckboxInput dataset={dataset} handleChange={this.handleChange} />
-          ))}
-        </CheckboxContainer>
-        <SaveButton state={this.state} />
-      </div>
+      <Layout>
+        <Jumbotron>
+          <h1 id="heading">Mapper</h1>{" "}
+          <RegionMap datasets={this.state.datasets} />
+          <CheckboxContainer>
+            <h3>Datasets</h3>
+            {this.state.datasets.map(dataset => (
+              <CheckboxInput
+                dataset={dataset}
+                handleChange={this.handleChange}
+              />
+            ))}
+          </CheckboxContainer>
+          <SaveButton state={this.state} />
+        </Jumbotron>
+      </Layout>
     );
   }
 }

@@ -3,9 +3,9 @@ import API from "../../utils/API";
 
 export default class SaveButton extends Component {
   handleClick = () => {
-    var userMapID = this.props.state.mapID;
+    var usermapID = this.props.state.usermapID;
     var datasets = this.props.state.datasets;
-    API.updateUserMap(userMapID, datasets).then(response =>
+    API.updateUserMap(usermapID, datasets).then(response =>
       console.log(response.data)
     );
   };

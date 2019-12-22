@@ -42,4 +42,8 @@ router.route("/user/:username").post((req, res) => {
   );
 });
 
+router.route("/user/:username").get((req, res) => {
+  db.User.find({ username: req.params.username }).then(data => res.json(data));
+});
+
 module.exports = router;
