@@ -4,9 +4,6 @@ import API from "../../utils/API";
 import { Link } from "react-router-dom";
 import Jumbotron from "react-bootstrap/Jumbotron";
 
-// The dashboard component should have an h1 with the current username
-// It should also have a number of links associated with that users maps
-
 export default class Dashboard extends Component {
   state = {
     username: "",

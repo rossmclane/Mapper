@@ -35,16 +35,6 @@ router.route("/map/:id").put((req, res) => {
   ).then(response => console.log(response));
 });
 
-// User Routes
-// router.route("/user/:username").post((req, res) => {
-//   db.User.create({
-//     username: req.params.username,
-//     usermapIDs: []
-//   })
-//     .then(data => res.json(data))
-//     .catch(err => res.json(err));
-// });
-
 router.route("/user").post((req, res) => {
   db.User.create({
     username: req.body.username,

@@ -6,19 +6,28 @@ import Layout from "../../components/Layout";
 
 class Signup extends React.Component {
   state = {
-    username: ""
+    username: "",
+    password: ""
   };
 
   handleChange = ({ target }) => {
-    const { value } = target;
+    const { name, value } = target;
 
-    this.setState({ username: value });
+    this.setState({ [name]: value });
   };
 
   handleSubmit = event => {
     event.preventDefault();
     var username = this.state.username;
-    API.postUser(username).then(response =>
+    var password = this.state.password;
+
+    var data = {
+      username: username,
+      password: password,
+      datasets: []
+    };
+
+    API.postUser(data).then(response =>
       this.props.history.push(`/u/${response.data.username}`)
     );
   };
@@ -37,9 +46,14 @@ class Signup extends React.Component {
                 val={this.state.username}
                 onChange={this.handleChange}
                 placeholder="Username"
+                name="username"
               />
-              <Input placeholder="Password" />
-              <Input placeholder="Password" />
+              <Input
+                val={this.state.password}
+                onChange={this.handleChange}
+                placeholder="Password"
+                name="password"
+              />
               <FormBtn onClick={this.handleSubmit}>Sign Up</FormBtn>
             </Col>
           </Row>

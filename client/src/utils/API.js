@@ -13,7 +13,7 @@ export default {
   getUser: function(username) {
     return axios.get(`/api/user/${username}`);
   },
-  postUser: function(username) {
-    return axios.post(`/api/user/${username}`);
+  postUser: function(data) {
+    return axios.post(`/api/user`, data);
   }
 };
