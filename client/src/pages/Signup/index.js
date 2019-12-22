@@ -1,12 +1,10 @@
 import React from "react";
-import "./style.css";
 import { Input, FormBtn } from "../../components/Input";
 import API from "../../utils/API";
 import { Row, Col } from "react-bootstrap";
 import Layout from "../../components/Layout";
 
-class Homepage extends React.Component {
-  // set the username state to what is inside of the input field
+class Signup extends React.Component {
   state = {
     username: ""
   };
@@ -20,11 +18,8 @@ class Homepage extends React.Component {
   handleSubmit = event => {
     event.preventDefault();
     var username = this.state.username;
-
-    API.getUser(username).then(response =>
-      response.data.length
-        ? this.props.history.push(`/u/${response.data[0].username}`)
-        : alert("No User Found!")
+    API.postUser(username).then(response =>
+      this.props.history.push(`/u/${response.data.username}`)
     );
   };
 
@@ -37,17 +32,15 @@ class Homepage extends React.Component {
           </Row>
           <Row className="justify-content-between" style={{ height: "500px" }}>
             <Col md={{ span: 4, offset: 4 }}>
-              <h3 style={{ color: "white" }}> Login </h3>
+              <h3 style={{ color: "white" }}> Sign Up </h3>
               <Input
                 val={this.state.username}
                 onChange={this.handleChange}
                 placeholder="Username"
               />
               <Input placeholder="Password" />
-              <FormBtn onClick={this.handleSubmit}>Login</FormBtn>
-              <a href="/signup" style={{ color: "white" }}>
-                Sign Up
-              </a>
+              <Input placeholder="Password" />
+              <FormBtn onClick={this.handleSubmit}>Sign Up</FormBtn>
             </Col>
           </Row>
         </Layout>
@@ -56,4 +49,4 @@ class Homepage extends React.Component {
   }
 }
 
-export default Homepage;
+export default Signup;

@@ -17,7 +17,7 @@ export default class Dashboard extends Component {
     var username = this.props.match.params.username;
 
     API.getUser(username).then(response => {
-      var usermapIDs = response.data[0].usermaps;
+      var usermapIDs = response.data[0].usermapIDs;
       this.setState({
         username: username,
         usermapIDs: usermapIDs
@@ -35,8 +35,8 @@ export default class Dashboard extends Component {
       ]
     };
     API.postUserMap(username, mapData).then(response => {
-      var usermaps = response.data.usermaps;
-      var usermapID = usermaps[usermaps.length - 1];
+      var usermapIDs = response.data.usermapIDs;
+      var usermapID = usermapIDs[usermapIDs.length - 1];
 
       this.props.history.push(`/u/${username}/map/${usermapID}`);
     });

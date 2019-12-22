@@ -18,7 +18,7 @@ router.route("/user/:username/map").post((req, res) => {
     .then(function(userMapData) {
       return db.User.findOneAndUpdate(
         { username: username },
-        { $push: { usermaps: userMapData._id } },
+        { $push: { usermapIDs: userMapData._id } },
         { new: true }
       );
     })
@@ -37,9 +37,10 @@ router.route("/map/:id").put((req, res) => {
 
 // User Routes
 router.route("/user/:username").post((req, res) => {
-  db.User.create({ username: req.params.username, usermaps: [] }).then(data =>
-    res.json(data)
-  );
+  db.User.create({
+    username: req.params.username,
+    usermapIDs: []
+  }).then(data => res.json(data));
 });
 
 router.route("/user/:username").get((req, res) => {
