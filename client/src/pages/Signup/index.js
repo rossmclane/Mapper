@@ -27,9 +27,13 @@ class Signup extends React.Component {
       datasets: []
     };
 
-    API.postUser(data).then(response =>
-      this.props.history.push(`/u/${response.data.username}`)
-    );
+    API.postUser(data).then(() => {
+      API.authenticateUser(data).then(response => {
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem("username", response.data.username);
+        return this.props.history.push(`/u/${response.data.username}`);
+      });
+    });
   };
 
   render() {
@@ -53,6 +57,7 @@ class Signup extends React.Component {
                 onChange={this.handleChange}
                 placeholder="Password"
                 name="password"
+                type="password"
               />
               <FormBtn onClick={this.handleSubmit}>Sign Up</FormBtn>
             </Col>

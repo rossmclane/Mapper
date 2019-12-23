@@ -4,7 +4,6 @@ const db = require("../models");
 module.exports = function(req, res, next) {
   try {
     const authorization = req.headers.authorization;
-    console.log(authorization);
     if (!authorization) throw new Error();
     const token = authorization.replace("Bearer ", "");
     const decoded = jwt.verify(token, "superSecretKey");

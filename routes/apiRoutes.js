@@ -66,6 +66,9 @@ router.post("/authenticate", (req, res) => {
         .json({ message: "Sorry, your username or password didn't match." });
     }
 
+    // console.log(dbUser.password);
+    // console.log(req.body.password);
+
     if (dbUser.comparePassword(req.body.password)) {
       const token = jwt.sign({ data: dbUser._id }, "superSecretKey");
       res.json({ id: dbUser._id, username: dbUser.username, token: token });
@@ -78,7 +81,6 @@ router.post("/authenticate", (req, res) => {
 });
 
 router.get("/protected", isAuthenticated, (req, res) => {
-  // console.log(Object.keys(req.headers));
   res.json(`Welcome ${req.user.username}`);
 });
 
