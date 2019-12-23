@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const UserSchema = new Schema({
   username: {
@@ -12,7 +13,11 @@ const UserSchema = new Schema({
   usermapIDs: [{ type: Schema.Types.ObjectId, ref: "UserMap" }]
 });
 
-UserSchema.pre("save", () => {
+UserSchema.methods.comparePassword = function(inputPass) {
+  return bcrypt.compareSync(inputPass, this.password);
+};
+
+UserSchema.pre("save", function() {
   this.password = bcrypt.hashSync(this.password, 5);
 });
 

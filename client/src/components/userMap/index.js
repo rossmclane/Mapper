@@ -5,8 +5,8 @@ import CheckboxContainer from "../CheckboxContainer";
 import SaveButton from "../SaveButton";
 import "./style.css";
 import API from "../../utils/API";
-import Jumbotron from "react-bootstrap/Jumbotron";
 import Layout from "../Layout";
+import { Row, Col } from "react-bootstrap";
 
 class UserMap extends Component {
   state = {
@@ -47,20 +47,28 @@ class UserMap extends Component {
   render() {
     return (
       <Layout>
-        <Jumbotron>
-          <h1 id="heading">Mapper</h1>{" "}
-          <RegionMap datasets={this.state.datasets} />
-          <CheckboxContainer>
-            <h3>Datasets</h3>
-            {this.state.datasets.map(dataset => (
-              <CheckboxInput
-                dataset={dataset}
-                handleChange={this.handleChange}
-              />
-            ))}
-          </CheckboxContainer>
-          <SaveButton state={this.state} />
-        </Jumbotron>
+        <Row>
+          <Col className="content-justified-center" md={{ span: 4, offset: 4 }}>
+            <h1 style={{ textAlign: "center", padding: "5px" }}>Your Map</h1>
+          </Col>
+        </Row>
+        <Row style={{ height: "600px" }}>
+          <Col md={{ span: 8, offset: 2 }}>
+            <RegionMap datasets={this.state.datasets} />
+          </Col>
+          <Col md={2}>
+            <CheckboxContainer>
+              <h3>Datasets</h3>
+              {this.state.datasets.map(dataset => (
+                <CheckboxInput
+                  dataset={dataset}
+                  handleChange={this.handleChange}
+                />
+              ))}
+            </CheckboxContainer>
+            <SaveButton state={this.state} />
+          </Col>
+        </Row>
       </Layout>
     );
   }

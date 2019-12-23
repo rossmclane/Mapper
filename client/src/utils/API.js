@@ -15,5 +15,8 @@ export default {
   },
   postUser: function(data) {
     return axios.post(`/api/user`, data);
+  },
+  authenticateUser: function(data) {
+    return axios.post(`api/authenticate`, data);
   }
 };

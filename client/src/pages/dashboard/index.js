@@ -43,7 +43,7 @@ export default class Dashboard extends Component {
     return (
       <Jumbotron>
         <div>
-          <h1>{this.state.username}</h1>
+          <h1>Hi, {this.state.username}!</h1>
 
           {this.state.usermapIDs.map(usermapID => (
             <div>

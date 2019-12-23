@@ -8,23 +8,26 @@ import Layout from "../../components/Layout";
 class Homepage extends React.Component {
   // set the username state to what is inside of the input field
   state = {
-    username: ""
+    username: "",
+    password: ""
   };
 
   handleChange = ({ target }) => {
-    const { value } = target;
+    const { name, value } = target;
 
-    this.setState({ username: value });
+    this.setState({ [name]: value });
+    console.log(this.state);
   };
 
   handleSubmit = event => {
     event.preventDefault();
-    var username = this.state.username;
-
-    API.getUser(username).then(response =>
-      response.data.length
-        ? this.props.history.push(`/u/${response.data[0].username}`)
-        : alert("No User Found!")
+    var data = { username: this.state.username, password: this.state.password };
+    console.log(data);
+    API.authenticateUser(data).then(
+      response => console.log(response)
+      // response.data.length
+      //   ? this.props.history.push(`/u/${response.data[0].username}`)
+      //   : alert("No User Found!")
     );
   };
 
@@ -42,8 +45,15 @@ class Homepage extends React.Component {
                 val={this.state.username}
                 onChange={this.handleChange}
                 placeholder="Username"
+                name="username"
               />
-              <Input placeholder="Password" />
+              <Input
+                val={this.state.password}
+                onChange={this.handleChange}
+                placeholder="Password"
+                name="password"
+                type="password"
+              />
               <FormBtn onClick={this.handleSubmit}>Login</FormBtn>
               <a href="/signup" style={{ color: "white" }}>
                 Sign Up

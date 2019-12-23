@@ -22,7 +22,9 @@ const NavBar = () => {
   return (
     <Styles>
       <Navbar expand="lg">
-        <Navbar.Brand href="">Placeholder</Navbar.Brand>
+        <Navbar.Brand href="">
+          <Nav.Link href="/">Placeholder</Nav.Link>
+        </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav className="ml-auto">

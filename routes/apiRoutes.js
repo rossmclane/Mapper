@@ -1,12 +1,14 @@
 const router = require("express").Router();
 const db = require("../models");
+const jwt = require("jsonwebtoken");
+const isAuthenticated = require("../middleware/isAuthenticated");
 
 // Map Routes
-router.route("/map/:id").get((req, res) => {
+router.get("/map/:id", (req, res) => {
   db.UserMap.find({ _id: req.params.id }).then(data => res.json(data));
 });
 
-router.route("/user/:username/map").post((req, res) => {
+router.post("/user/:username/map", (req, res) => {
   var username = req.params.username;
 
   const { featurecollectionID, datasets } = req.body;
@@ -28,14 +30,16 @@ router.route("/user/:username/map").post((req, res) => {
     });
 });
 
-router.route("/map/:id").put((req, res) => {
+// Needs finishing
+router.put("/map/:id", (req, res) => {
   db.UserMap.updateOne(
     { _id: req.params.id },
     { $set: { datasets: req.body } }
   ).then(response => console.log(response));
 });
 
-router.route("/user").post((req, res) => {
+// User Routes
+router.post("/user", (req, res) => {
   db.User.create({
     username: req.body.username,
     password: req.body.password,
@@ -45,8 +49,32 @@ router.route("/user").post((req, res) => {
     .catch(err => res.json(err));
 });
 
-router.route("/user/:username").get((req, res) => {
+router.get("/user/:username", (req, res) => {
   db.User.find({ username: req.params.username }).then(data => res.json(data));
+});
+
+// Authentication
+router.post("/authenticate", (req, res) => {
+  db.User.findOne({ username: req.body.username }).then(function(dbUser) {
+    if (!dbUser) {
+      res
+        .status(401)
+        .json({ message: "Sorry, your username or password didn't match." });
+    }
+
+    if (dbUser.comparePassword(req.body.password)) {
+      const token = jwt.sign({ data: dbUser._id }, "superSecretKey");
+      res.json({ id: dbUser._id, username: dbUser.username, token: token });
+    } else {
+      res
+        .status(401)
+        .json({ message: "Sorry, your username or password didn't match." });
+    }
+  });
+});
+
+router.get("/protected", isAuthenticated, (req, res) => {
+  res.json("This is a protected route!");
 });
 
 module.exports = router;
