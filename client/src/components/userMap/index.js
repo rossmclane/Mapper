@@ -19,7 +19,13 @@ class UserMap extends Component {
   componentDidMount = () => {
     var { usermapID, username } = this.props.match.params;
 
-    API.getUserMap(usermapID).then(response => {
+    let config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    API.getUserMap(usermapID, config).then(response => {
       var { datasets, featurecollectionID } = response.data[0];
       this.setState({
         datasets: datasets,
@@ -27,21 +33,17 @@ class UserMap extends Component {
         username: username,
         usermapID: usermapID
       });
-
-      console.log(this.state);
     });
   };
 
   handleChange = ({ target }) => {
     const { name, checked } = target;
-    console.log(name, checked);
 
     this.setState(prevState => ({
       datasets: prevState.datasets.map(obj =>
         obj.name === name ? Object.assign(obj, { checked: checked }) : obj
       )
     }));
-    console.log(this.state);
   };
 
   render() {

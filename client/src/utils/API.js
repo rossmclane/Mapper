@@ -1,17 +1,17 @@
 import axios from "axios";
 
 export default {
-  getUserMap: function(id) {
-    return axios.get(`/api/map/${id}`);
+  getUserMap: function(id, config) {
+    return axios.get(`/api/map/${id}`, config);
   },
   updateUserMap: function(id, data) {
     return axios.put(`/api/map/${id}`, data);
   },
-  postUserMap: function(username, data) {
-    return axios.post(`/api/user/${username}/map`, data);
+  postUserMap: function(username, data, config) {
+    return axios.post(`/api/user/${username}/map`, data, config);
   },
-  getUser: function(username) {
-    return axios.get(`/api/user/${username}`);
+  getUser: function(username, config) {
+    return axios.get(`/api/user/${username}`, config);
   },
   postUser: function(data) {
     return axios.post(`/api/user`, data);

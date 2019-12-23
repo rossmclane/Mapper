@@ -16,19 +16,16 @@ class Homepage extends React.Component {
     const { name, value } = target;
 
     this.setState({ [name]: value });
-    console.log(this.state);
   };
 
   handleSubmit = event => {
     event.preventDefault();
     var data = { username: this.state.username, password: this.state.password };
-    console.log(data);
-    API.authenticateUser(data).then(
-      response => console.log(response)
-      // response.data.length
-      //   ? this.props.history.push(`/u/${response.data[0].username}`)
-      //   : alert("No User Found!")
-    );
+    API.authenticateUser(data).then(response => {
+      localStorage.setItem("token", response.data.token);
+      localStorage.setItem("username", response.data.username);
+      return this.props.history.push(`/u/${response.data.username}`);
+    });
   };
 
   render() {

@@ -4,34 +4,38 @@ const jwt = require("jsonwebtoken");
 const isAuthenticated = require("../middleware/isAuthenticated");
 
 // Map Routes
-router.get("/map/:id", (req, res) => {
+router.get("/map/:id", isAuthenticated, (req, res) => {
   db.UserMap.find({ _id: req.params.id }).then(data => res.json(data));
 });
 
-router.post("/user/:username/map", (req, res) => {
-  var username = req.params.username;
+// Post a default map to a user
+router.post("/user/:username/map", isAuthenticated, (req, res) => {
+  if (req.user.username === req.params.username) {
+    var username = req.params.username;
+    const { featurecollectionID, datasets } = req.body;
 
-  const { featurecollectionID, datasets } = req.body;
-
-  db.UserMap.create({
-    featurecollectionID: featurecollectionID,
-    datasets: datasets
-  })
-    .then(function(userMapData) {
-      return db.User.findOneAndUpdate(
-        { username: username },
-        { $push: { usermapIDs: userMapData._id } },
-        { new: true }
-      );
+    db.UserMap.create({
+      featurecollectionID: featurecollectionID,
+      datasets: datasets
     })
-    .then(data => res.json(data))
-    .catch(function(err) {
-      res.json(err);
-    });
+      .then(function(userMapData) {
+        return db.User.findOneAndUpdate(
+          { username: username },
+          { $push: { usermapIDs: userMapData._id } },
+          { new: true }
+        );
+      })
+      .then(data => res.json(data))
+      .catch(function(err) {
+        res.json(err);
+      });
+  } else {
+    res.json("You don't have access to this route!");
+  }
 });
 
-// Needs finishing
-router.put("/map/:id", (req, res) => {
+// Updating a map
+router.put("/map/:id", isAuthenticated, (req, res) => {
   db.UserMap.updateOne(
     { _id: req.params.id },
     { $set: { datasets: req.body } }
@@ -49,7 +53,7 @@ router.post("/user", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.get("/user/:username", (req, res) => {
+router.get("/user/:username", isAuthenticated, (req, res) => {
   db.User.find({ username: req.params.username }).then(data => res.json(data));
 });
 
@@ -74,7 +78,8 @@ router.post("/authenticate", (req, res) => {
 });
 
 router.get("/protected", isAuthenticated, (req, res) => {
-  res.json("This is a protected route!");
+  // console.log(Object.keys(req.headers));
+  res.json(`Welcome ${req.user.username}`);
 });
 
 module.exports = router;

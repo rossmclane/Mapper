@@ -11,9 +11,15 @@ export default class Dashboard extends Component {
   };
 
   componentDidMount = () => {
-    var username = this.props.match.params.username;
+    var username = localStorage.getItem("username");
 
-    API.getUser(username).then(response => {
+    let config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    API.getUser(username, config).then(response => {
       var usermapIDs = response.data[0].usermapIDs;
       this.setState({
         username: username,
@@ -31,7 +37,14 @@ export default class Dashboard extends Component {
         { name: "rainfall", checked: false }
       ]
     };
-    API.postUserMap(username, mapData).then(response => {
+
+    let config = {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token")
+      }
+    };
+
+    API.postUserMap(username, mapData, config).then(response => {
       var usermapIDs = response.data.usermapIDs;
       var usermapID = usermapIDs[usermapIDs.length - 1];
 
