@@ -1,9 +1,14 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import Auth from "../utils/Auth";
+import Auth from "../../utils/Auth";
 
-const ProtectedRoute = () => {
-  return <div></div>;
-};
+const ProtectedRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={props =>
+      Auth.isLoggedIn() ? <Component {...props} /> : <Redirect to="/" />
+    }
+  />
+);
 
-export default ProtectedRotue;
+export default ProtectedRoute;

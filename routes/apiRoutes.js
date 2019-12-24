@@ -25,15 +25,15 @@ router
     }).then(dbUserMap => {
       req.user
         .update({ $push: { usermapIDs: dbUserMap._id } }, { new: true })
-        .then(() => db.User.find({ _id: req.user._id }))
-        .then(dbUser => res.json(dbUser));
+        .then(() => res.json(dbUserMap));
     });
   })
   .put(authware, (req, res) => {
     db.UserMap.updateOne(
       { _id: req.params.id },
-      { $set: { datasets: req.body } }
-    );
+      { $set: { datasets: req.body } },
+      { new: true }
+    ).then(response => console.log(response));
   });
 
 // Get and Post User Routes
@@ -49,6 +49,7 @@ router
       .catch(err => res.json(err));
   })
   .get(authware, (req, res) => {
+    console.log(req.user.username);
     db.User.findOne({ username: req.user.username }).then(data =>
       res.json(data)
     );

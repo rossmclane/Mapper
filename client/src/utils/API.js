@@ -8,8 +8,8 @@ export default {
   updateUserMap: function(id, data) {
     return AuthenticatedAxios.put(`/api/map/${id}`, data);
   },
-  postUserMap: function(username, data, config) {
-    return AuthenticatedAxios.post(`/api/user/${username}/map`, data);
+  postUserMap: function(data) {
+    return AuthenticatedAxios.post(`/api/map`, data);
   },
   getUser: function(username, config) {
     return AuthenticatedAxios.get(`/api/user/${username}`);

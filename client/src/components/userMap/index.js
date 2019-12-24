@@ -19,14 +19,8 @@ class UserMap extends Component {
   componentDidMount = () => {
     var { usermapID, username } = this.props.match.params;
 
-    let config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    API.getUserMap(usermapID, config).then(response => {
-      var { datasets, featurecollectionID } = response.data[0];
+    API.getUserMap(usermapID).then(response => {
+      var { datasets, featurecollectionID } = response.data;
       this.setState({
         datasets: datasets,
         featurecollectionID: featurecollectionID,

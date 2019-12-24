@@ -7,6 +7,7 @@ import Signup from "./pages/Signup";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "./components/NavBar";
+import ProtectedRoute from "./components/ProtectedRoute/";
 
 export default function App() {
   return (
@@ -16,8 +17,11 @@ export default function App() {
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route exact path="/signup" component={Signup} />
-          <Route exact path="/u/:username/" component={Dashboard} />
-          <Route path="/u/:username/map/:usermapID" component={UserMap} />
+          <ProtectedRoute exact path="/u/:username/" component={Dashboard} />
+          <ProtectedRoute
+            path="/u/:username/map/:usermapID"
+            component={UserMap}
+          />
           <Route path="*" component={NoMatch} />
         </Switch>
       </Router>

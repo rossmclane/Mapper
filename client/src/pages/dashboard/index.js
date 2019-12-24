@@ -11,19 +11,18 @@ export default class Dashboard extends Component {
   };
 
   componentDidMount = () => {
+    // Later use context to broadcast this username up
     var username = this.props.match.params.username;
-
     API.getUser(username).then(response => {
       var usermapIDs = response.data.usermapIDs;
       this.setState({
-        username: username,
-        usermapIDs: usermapIDs
+        usermapIDs: usermapIDs,
+        username: username
       });
     });
   };
 
   handleNewMap = () => {
-    var username = this.state.username;
     var mapData = {
       featurecollectionID: "5dfb8efca0ed4346d764ffa6",
       datasets: [
@@ -32,16 +31,9 @@ export default class Dashboard extends Component {
       ]
     };
 
-    let config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    API.postUserMap(username, mapData, config).then(response => {
-      var usermapIDs = response.data.usermapIDs;
-      var usermapID = usermapIDs[usermapIDs.length - 1];
-
+    API.postUserMap(mapData).then(response => {
+      let username = this.state.username;
+      let usermapID = response.data._id;
       this.props.history.push(`/u/${username}/map/${usermapID}`);
     });
   };
