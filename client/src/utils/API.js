@@ -1,22 +1,23 @@
-import axios from "axios";
+// import axios from "axios";
+import AuthenticatedAxios from "../utils/AuthenticatedAxios";
 
 export default {
   getUserMap: function(id, config) {
-    return axios.get(`/api/map/${id}`, config);
+    return AuthenticatedAxios.get(`/api/map/${id}`);
   },
   updateUserMap: function(id, data) {
-    return axios.put(`/api/map/${id}`, data);
+    return AuthenticatedAxios.put(`/api/map/${id}`, data);
   },
   postUserMap: function(username, data, config) {
-    return axios.post(`/api/user/${username}/map`, data, config);
+    return AuthenticatedAxios.post(`/api/user/${username}/map`, data);
   },
   getUser: function(username, config) {
-    return axios.get(`/api/user/${username}`, config);
+    return AuthenticatedAxios.get(`/api/user/${username}`);
   },
   postUser: function(data) {
-    return axios.post(`/api/user`, data);
+    return AuthenticatedAxios.post(`/api/user`, data);
   },
   authenticateUser: function(data) {
-    return axios.post(`api/authenticate`, data);
+    return AuthenticatedAxios.post(`api/authenticate`, data);
   }
 };

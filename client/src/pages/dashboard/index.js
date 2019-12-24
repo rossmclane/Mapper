@@ -11,16 +11,10 @@ export default class Dashboard extends Component {
   };
 
   componentDidMount = () => {
-    var username = localStorage.getItem("username");
+    var username = this.props.match.params.username;
 
-    let config = {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token")
-      }
-    };
-
-    API.getUser(username, config).then(response => {
-      var usermapIDs = response.data[0].usermapIDs;
+    API.getUser(username).then(response => {
+      var usermapIDs = response.data.usermapIDs;
       this.setState({
         username: username,
         usermapIDs: usermapIDs

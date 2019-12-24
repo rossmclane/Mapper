@@ -3,6 +3,7 @@ import { Input, FormBtn } from "../../components/Input";
 import API from "../../utils/API";
 import { Row, Col } from "react-bootstrap";
 import Layout from "../../components/Layout";
+import Auth from "../../utils/Auth";
 
 class Signup extends React.Component {
   state = {
@@ -12,7 +13,6 @@ class Signup extends React.Component {
 
   handleChange = ({ target }) => {
     const { name, value } = target;
-
     this.setState({ [name]: value });
   };
 
@@ -21,18 +21,17 @@ class Signup extends React.Component {
     var username = this.state.username;
     var password = this.state.password;
 
-    var data = {
+    var newUser = {
       username: username,
       password: password,
       datasets: []
     };
 
-    API.postUser(data).then(() => {
-      API.authenticateUser(data).then(response => {
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("username", response.data.username);
-        return this.props.history.push(`/u/${response.data.username}`);
-      });
+    // Create a new user, then logIn and redirect to the dashboard
+    API.postUser(newUser).then(response => {
+      Auth.logIn(newUser.username, newUser.password, response =>
+        this.props.history.push(`/u/${response.username}`)
+      );
     });
   };
 

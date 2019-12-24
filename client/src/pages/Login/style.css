@@ -1,0 +1,8 @@
+#header {
+  margin: 0 auto;
+}
+
+#background {
+  background-image: url("https://images.unsplash.com/photo-1576768110388-c2cc54e9de4b?crop=entropy&cs=tinysrgb&fit=crop&fm=jpg&h=1600&ixlib=rb-1.2.1&q=80&w=2560");
+  background-repeat: no-repeat;
+}
