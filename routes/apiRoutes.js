@@ -49,22 +49,19 @@ router
       .catch(err => res.json(err));
   })
   .get(authware, (req, res) => {
-    console.log(req.user.username);
     db.User.findOne({ username: req.user.username }).then(data =>
       res.json(data)
     );
   });
 
 // Authentication Route
-router.post("/authenticate", (req, res) => {
+router.route("/authenticate").post((req, res) => {
   db.User.findOne({ username: req.body.username }).then(function(dbUser) {
     if (!dbUser) {
       res
         .status(401)
         .json({ message: "Sorry, your username or password didn't match." });
     }
-    console.log(dbUser.password);
-    console.log(req.body.password);
     if (dbUser.comparePassword(req.body.password)) {
       const token = jwt.sign({ data: dbUser._id }, "superSecretKey");
       res.json({ id: dbUser._id, username: dbUser.username, token: token });

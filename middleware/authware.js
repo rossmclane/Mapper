@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const db = require("../models");
 const jwt = require("jsonwebtoken");
 
 module.exports = function(req, res, next) {
@@ -8,7 +8,8 @@ module.exports = function(req, res, next) {
     const token = authorization.replace("Bearer ", "");
     const decoded = jwt.verify(token, "superSecretKey");
 
-    User.findOne({ _id: decoded.data }).then(function(dbUser) {
+    // the problem is that there isnt a user with that decoded.data
+    db.User.findOne({ _id: decoded.data }).then(dbUser => {
       req.user = dbUser;
       next();
     });

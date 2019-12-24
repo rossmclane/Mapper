@@ -11,13 +11,12 @@ export default class Dashboard extends Component {
   };
 
   componentDidMount = () => {
-    // Later use context to broadcast this username up
     var username = this.props.match.params.username;
+    this.setState({ username: username });
     API.getUser(username).then(response => {
       var usermapIDs = response.data.usermapIDs;
       this.setState({
-        usermapIDs: usermapIDs,
-        username: username
+        usermapIDs: usermapIDs
       });
     });
   };
