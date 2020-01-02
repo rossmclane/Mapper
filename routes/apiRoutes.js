@@ -45,10 +45,12 @@ router
       password: req.body.password,
       usermapIDs: []
     })
-      .then(data => res.json(data))
+      .then(data => res.end())
       .catch(err => res.json(err));
   })
   .get(authware, (req, res) => {
+    // somehow not loggin in yet
+    console.log(req.user);
     db.User.findOne({ username: req.user.username }).then(data =>
       res.json(data)
     );

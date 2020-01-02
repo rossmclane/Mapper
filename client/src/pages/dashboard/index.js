@@ -14,6 +14,7 @@ export default class Dashboard extends Component {
     var username = this.props.match.params.username;
     this.setState({ username: username });
     API.getUser(username).then(response => {
+      console.log(response);
       var usermapIDs = response.data.usermapIDs;
       this.setState({
         usermapIDs: usermapIDs

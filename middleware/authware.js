@@ -8,8 +8,10 @@ module.exports = function(req, res, next) {
     const token = authorization.replace("Bearer ", "");
     const decoded = jwt.verify(token, "superSecretKey");
 
-    // the problem is that there isnt a user with that decoded.data
+    console.log("Authware", decoded);
+
     db.User.findOne({ _id: decoded.data }).then(dbUser => {
+      console.log("Authware", dbUser);
       req.user = dbUser;
       next();
     });

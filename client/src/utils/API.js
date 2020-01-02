@@ -1,23 +1,31 @@
 // import axios from "axios";
-import AuthenticatedAxios from "../utils/AuthenticatedAxios";
+import axios from "axios";
+
+function genAxios() {
+  return axios.create({
+    headers: {
+      Authorization: localStorage.getItem("token")
+    }
+  });
+}
 
 export default {
-  getUserMap: function(id, config) {
-    return AuthenticatedAxios.get(`/api/map/${id}`);
+  getUserMap: function(id) {
+    return genAxios().get(`/api/map/${id}`);
   },
   updateUserMap: function(id, data) {
-    return AuthenticatedAxios.put(`/api/map/${id}`, data);
+    return genAxios().put(`/api/map/${id}`, data);
   },
   postUserMap: function(data) {
-    return AuthenticatedAxios.post(`/api/map`, data);
+    return genAxios().post(`/api/map`, data);
   },
-  getUser: function(username, config) {
-    return AuthenticatedAxios.get(`/api/user/${username}`);
+  getUser: function(username) {
+    return genAxios().get(`/api/user/${username}`);
   },
   postUser: function(data) {
-    return AuthenticatedAxios.post(`/api/user`, data);
+    return genAxios().post(`/api/user`, data);
   },
   authenticateUser: function(data) {
-    return AuthenticatedAxios.post(`api/authenticate`, data);
+    return genAxios().post(`api/authenticate`, data);
   }
 };

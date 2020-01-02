@@ -35,7 +35,7 @@ class Login extends React.Component {
       <div id="background">
         <Layout>
           <Row className="justify-content-center" style={{ height: "200px" }}>
-            <h1 style={{ color: "white" }}>Welcome to Placeholder!</h1>
+            <h1 style={{ color: "white" }}>Welcome to Geograph!</h1>
           </Row>
           <Row className="justify-content-between" style={{ height: "500px" }}>
             <Col md={{ span: 4, offset: 4 }}>

@@ -23,7 +23,7 @@ const NavBar = () => {
     <Styles>
       <Navbar expand="lg">
         <Navbar.Brand href="">
-          <Nav.Link href="/">Placeholder</Nav.Link>
+          <Nav.Link href="/">Geograph</Nav.Link>
         </Navbar.Brand>
         <Navbar.Toggle />
         <Navbar.Collapse>
